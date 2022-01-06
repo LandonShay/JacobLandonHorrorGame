@@ -9,14 +9,14 @@ namespace ProgramUI
 {
     public class ProgramUI
     {
-        public void RandomNumber()
-        {
-            int randomNumber;
-
-            Random rdnm = new Random();
-            randomNumber = rdnm.Next(1, 26);
-        }
-
+        static bool glassCup = false;
+        static bool glassUsed = false;
+        static bool chainBroken = false;
+        static bool foyerKey = false;
+        static bool rugPulled = false;
+        static bool attackedByBat = false;
+        static Player player = new Player();
+        static Random rnd = new Random();
 
         public void Run()
         {
@@ -25,7 +25,6 @@ namespace ProgramUI
         public void RunApp()
         {
             bool keepLooping = true;
-            Player player = new Player();
             Console.WriteLine("Name Of Game");
             Console.WriteLine("Please enter your name.");
             player.Name = Console.ReadLine();
@@ -44,10 +43,12 @@ namespace ProgramUI
                 int choiceOne = int.Parse(Console.ReadLine());
                 if (choiceOne == 1)
                 {
+                    keepLooping = false;
                     Foyer();
                 }
                 else if (choiceOne == 2)
                 {
+                    keepLooping = false;
                     Garden();
                 }
                 else
@@ -60,10 +61,6 @@ namespace ProgramUI
         }
         static void Foyer()
         {
-            bool glassCup = false;
-            bool chainBroken = false;
-            bool foyerKey = false;
-            bool rugPulled = false;
             bool keepLooping = true;
             Console.Clear();
             Console.WriteLine("You enter the Foyer.");
@@ -71,10 +68,11 @@ namespace ProgramUI
                 "On the ceiling is a looming chandelier hanging by a disturbingly feeble-looking chain. Beneath it is a worn rug, which you highly suspect\n" +
                 "is infested with all manners of insects. At the back of the Foyer are two more doors, one leading to the living room, and another to the kitchen.");
             Console.ReadKey();
-            if (keepLooping)
+            while (keepLooping)
             {
+                Console.Clear();
                 Console.WriteLine("What will you do?\n" +
-                    "1. Inspect Room" +
+                    "1. Inspect Room\n" +
                     "2. Go to Living Room\n" +
                     "3. Go to Kitchen\n" +
                     "4. Go to Front Yard\n" +
@@ -86,6 +84,7 @@ namespace ProgramUI
                     case 1:
                         if (chainBroken == false)
                         {
+                            Console.Clear();
                             Console.WriteLine("You look around the Foyer. Up ahead are two winding staircases leading to the second floor, a set up against each wall.\n" +
                             "On the ceiling is a looming chandelier hanging by a disturbingly feeble-looking chain. Beneath it is a worn rug, which you highly suspect\n" +
                             "is infested with all manner of insects. At the back of the Foyer are two more doors, one leading to the living room, and another to the kitchen.");
@@ -93,6 +92,7 @@ namespace ProgramUI
                         }
                         else
                         {
+                            Console.Clear();
                             Console.WriteLine("You look around the Foyer. Up ahead are two winding staircases leading to the second floor, a set up against each wall.\n" +
                             "In the center of the room lies the shattered chandelier. Beneath it is a worn rug, which you highly suspect is infested with all manner of insects.\n" +
                             "At the back of the Foyer are two more doors, one leading to the living room, and another to the kitchen.");
@@ -113,35 +113,49 @@ namespace ProgramUI
                         break;
                     case 5:
                         Console.Clear();
-                        Console.WriteLine("You inspect the chandelier. It is tilted heavily, and looks as if it may fall at any moment. Its chain looks extremely feeble.\n" +
-                            "If something were to hit it, it may give out entirely...");
-                        Console.ReadKey();
-                        if (glassCup == true)
+                        if (chainBroken == false)
                         {
-                            Console.WriteLine("Were you to throw the glass cup you picked up in the kitchen at the chain, it just might be enough to fell the chandelier.\n" +
-                                "But why would you do that in the first place? Besides, you may need that cup later, and it's unlikely to survive the throw.\n" +
-                                "Do you want to throw the cup at the chain? Enter Yes or No");
-                            string chainChoice = Console.ReadLine();
-                            if (chainChoice == "Yes")
+                            Console.WriteLine("You inspect the chandelier. It is tilted heavily, and looks as if it may fall at any moment. Its chain looks extremely feeble.\n" +
+                                "If something were to hit it, it may give out entirely...");
+                            Console.ReadKey();
+                            if (glassCup == true)
                             {
-                                glassCup = false;
-                                foyerKey = true;
-                                Console.WriteLine("Knowing you only have one shot at this, you aim carefully, and with a deep breath, throw the cup with all your might.\n" +
-                                    "Against all odds, the glass connects with the chain, and the chandelier crashes into the ground! The chandelier explodes upon contact\n" +
-                                    "the floor, and its debris is sent scattering across the room. A piece even strikes you with great force, but further inspection\n" +
-                                    "reveals it to be no piece of the chandelier at all, but a key! What will it unlock, you wonder.");
-                                Console.ReadKey();
+                                Console.Clear();
+                                Console.WriteLine("Were you to throw the glass cup you picked up in the kitchen at the chain, it just might be enough to fell the chandelier.\n" +
+                                    "But why would you do that in the first place? Besides, you may need that cup later, and it's unlikely to survive the throw.\n" +
+                                    "Do you want to throw the cup at the chain? Enter Yes or No");
+                                string chainChoice = Console.ReadLine();
+                                if (chainChoice == "Yes")
+                                {
+                                    glassCup = false;
+                                    glassUsed = true;
+                                    chainBroken = true;
+                                    foyerKey = true;
+                                    Console.Clear();
+                                    Console.WriteLine("Knowing you only have one shot at this, you aim carefully, and with a deep breath, throw the cup with all your might.\n" +
+                                        "Against all odds, the glass connects with the chain, and the chandelier crashes into the ground! The chandelier explodes upon contact\n" +
+                                        "with the floor, and its debris is sent scattering across the room. A piece even strikes you with great force, but further inspection\n" +
+                                        "reveals it to be no piece of the chandelier at all, but a key! What will it unlock, you wonder.");
+                                    Console.ReadKey();
+                                }
+                                else if (chainChoice == "No")
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("You decide against throwing the cup, and continue on your way.");
+                                    Console.ReadKey();
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Invalid input. Please type Yes or No.");
+                                    Console.ReadKey();
+                                }
                             }
-                            else if (chainChoice == "No")
-                            {
-                                Console.WriteLine("You decide against throwing the cup, and continue on your way.");
-                                Console.ReadKey();
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid input. Please type Yes or No.");
-                                Console.ReadKey();
-                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The chandeliere lies shattered on the floor.");
+                            Console.ReadKey();
                         }
                         break;
                     case 6:
@@ -168,49 +182,121 @@ namespace ProgramUI
         }
         static void Kitchen()
         {
-            Console.Clear();
-            Console.WriteLine("You enter the Kitchen.");
-            Console.WriteLine("What will you do?\n" +
-                "1. Inspect Room\n" +
-                "2. Look Under Table\n" +
-                "3. Look in Drawers\n" +
-                "4. Look in Cabinets\n" +
-                "5. Go to Foyer\n" +
-                "6. Go to Wine Cellar");
-            int input = int.Parse(Console.ReadLine());
-            switch (input)
+            bool keepLooping = true;
+            while (keepLooping)
             {
-                case 1:
-                    Console.WriteLine("You look around the Kitchen. In the center is an old wooden table");
-                    break;
-                case 2:
-                    Console.WriteLine();
-                    break;
-                case 3:
-                    Console.WriteLine();
-                    break;
-                case 4:
-                    Console.WriteLine();
-                    break;
-                case 5:
-                    Console.WriteLine();
-                    break;
-                case 6:
-                    Console.WriteLine();
-                    break;
-                default:
-                    break;
+                Console.Clear();
+                Console.WriteLine("You enter the Kitchen.");
+                Console.WriteLine("What will you do?\n" +
+                    "1. Inspect Room\n" +
+                    "2. Inspect Table\n" +
+                    "3. Look in Drawers\n" +
+                    "4. Look in Cabinets\n" +
+                    "5. Go to Foyer\n" +
+                    "6. Go to Wine Cellar\n" +
+                    "7. Go to Garden");
+                int input = int.Parse(Console.ReadLine());
+                switch (input)
+                {
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("You look around the Kitchen. In the center is an old wooden table with nothing adorning it. There are several cabinets and\n" +
+                            "drawers lining the walls. Though there are windows as well, the broken glass deters you from attempting to climb through them. There are\n" +
+                            "three doors in the room, one leading to the Foyer, one leading to the Garden, and another to the Wine Cellar.");
+                        Console.ReadKey();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("You inspect the table. You can find nothing atop it. You crawl beneath the table in hopes that there might be something stuck\n" +
+                            "to the bottom, but find nothing but cobwebs.");
+                        Console.ReadKey();
+                        break;
+                    case 3:
+                        Console.Clear();
+                        if (glassCup == false)
+                        {
+                            Console.WriteLine("You search through the drawers one by one, and find a single glass cup! You're not sure what it'll be good for, but you only\n" +
+                                "have one, so you'd better be careful with it.");
+                            Console.ReadKey();
+                            glassCup = true;
+                        }
+                        else if (glassCup == true || glassUsed == true)
+                        {
+                            Console.WriteLine("You search the drawers again, but find nothing.");
+                            Console.ReadKey();
+                        }
+                        break;
+                    case 4:
+                        Console.Clear();
+                        if (attackedByBat == false)
+                        {
+                            Console.WriteLine("You open each cabinet one by one in search of something useful. You find nothing in any of them, but realize there's one last\n" +
+                                "cabinet left to inspect. However, you feel an odd sense of dread as you stand before it. Will you risk opening it? Enter Yes or No.");
+                            string response = Console.ReadLine();
+                            if (response == "Yes")
+                            {
+                                Console.WriteLine("Ever the daredevil, you open the cabinet against your better judgment, only to be immediately attacked by a giant bat!\n" +
+                                    "After clawing your face, it flies out the window. Unforuntately for you, there is nothing else in the cabinet. You lose 1 HP...");
+                                player.Health = player.Health - 1;
+                                attackedByBat = true;
+                                Console.ReadKey();
+                            }
+                            else if (response == "No")
+                            {
+                                Console.WriteLine("Trusting your gut, you decide not to try your luck and leave the cabinet shut.");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid input. Please enter Yes or No.");
+                                Console.ReadKey();
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("You open each cabinet one by one in search of something useful. You find nothing in any of them, and considering what happened\n" +
+                                "when there WAS something in one of them, you find yourself grateful for that.");
+                            Console.ReadKey();
+                        }
+                        break;
+                    case 5:
+                        keepLooping = false;
+                        Foyer();
+                        break;
+                    case 6:
+                        keepLooping = false;
+                        WineCellar();
+                        break;
+                    case 7:
+                        keepLooping = false;
+                        Garden();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         static void Garden()
         {
-
+            bool keepLooping = true;
+            Console.Clear();
+            Console.WriteLine("You arrive at the Garden.");
+            Console.WriteLine("What will you do?\n" +
+                "1. Inspect Garden\n" +
+                "2. Inspect Flowerbeds\n" +
+                "3. Inspect Fountain\n" +
+                "4. Go to Front Yard\n" +
+                "5. Go to Kitchen");
         }
         static void LivingRoom()
         {
 
         }
         static void FrontYard()
+        {
+
+        }
+        static void WineCellar()
         {
 
         }
