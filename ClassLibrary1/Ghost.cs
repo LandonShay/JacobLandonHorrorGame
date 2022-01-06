@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary1
 {
-    internal class Ghost
+    namespace ClassLibrary1
     {
+        public class Ghost
+        {
+         public int damage = 1;
+
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ClassLibrary1;
+using ClassLibrary1.ClassLibrary1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,21 +18,31 @@ namespace ProgramUI
             randomNumber = rdnm.Next(1, 26);
         }
 
+        private void GhostAttack()
+        {
+            {
+                GhostAttack();
+            }
+            Ghost ghost = new Ghost();
+            currentplayer.Health = currentplayer.Health - 1;
+        }
 
+        public static Ghost ghost = new Ghost();
+
+        public static Player currentplayer = new Player();
         public void Run()
         {
             RunApp();
         }
         public void RunApp()
         {
-            Player player = new Player();
             bool glassCup = false;
             bool foyerKey = false;
             bool rugPulled = false;
             bool keepLooping = true;
             Console.WriteLine("Name Of Game");
             Console.WriteLine("Please enter your name.");
-            player.Name = Console.ReadLine();
+            currentplayer.Name = Console.ReadLine();
             Console.Clear();
             Console.WriteLine("Before you is a decrepit house, its wooden exterior rotting and grass long dead. The biting wind chills you to the bone,\n" +
                 "and you decide suspect shelter is better than none. You enter the house, its dark and forboding atmosphere making you second guess your\n" +
