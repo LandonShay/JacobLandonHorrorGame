@@ -131,11 +131,6 @@ namespace ProgramUI
                 }
 
             }
-            else
-            {
-                Console.WriteLine();
-                Console.WriteLine("Invalid input. Please enter a valid number.");
-            }
         }
     }
 }
