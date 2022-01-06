@@ -39,7 +39,7 @@ namespace ProgramUI
                 "front door slams in your face, and much to your dismay, the handle will not turn. It would appear you are stuck here... Resolved to find\n" +
                 "a way out, you decide to explore this house. There are two rooms you can access from the main hall.");
             Console.ReadKey();
-            if (keepLooping)
+            while (keepLooping)
             {
                 Console.WriteLine("Where will you go?\n" +
                     "1. Foyer\n" +
