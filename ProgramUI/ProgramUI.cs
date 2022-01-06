@@ -15,8 +15,10 @@ namespace ProgramUI
         static bool foyerKey = false;
         static bool rugPulled = false;
         static bool attackedByBat = false;
+        static bool HasRing = false;
+        static bool HasShovel = false;
+        static bool UsedShovel = false;
         static Player player = new Player();
-        static Random rnd = new Random();
 
         public void Run()
         {
@@ -279,24 +281,126 @@ namespace ProgramUI
         static void Garden()
         {
             bool keepLooping = true;
-            Console.Clear();
-            Console.WriteLine("You arrive at the Garden.");
-            Console.WriteLine("What will you do?\n" +
-                "1. Inspect Garden\n" +
-                "2. Inspect Flowerbeds\n" +
-                "3. Inspect Fountain\n" +
-                "4. Go to Front Yard\n" +
-                "5. Go to Kitchen");
+            while (keepLooping)
+            {
+                Console.Clear();
+                Console.WriteLine("You arrive at the Garden.");
+                Console.WriteLine("What will you do?\n" +
+                    "1. Inspect Garden\n" +
+                    "2. Inspect Flowerbeds\n" +
+                    "3. Inspect Fountain\n" +
+                    "4. Inspect Bushes\n" +
+                    "5. Go to Front Yard\n" +
+                    "6. Go to Kitchen");
+                int input = int.Parse(Console.ReadLine());
+                switch (input)
+                {
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("In the Garden you spot a dilapidated fountain in the corner, and abandonded, disheveled flowerbeds overgrown with\n" +
+                            "weeds lining the edge of the garden. Overgrown bushes create a giant wall, preventing you from seeing outside the house's property.\n" +
+                            "From here, you can return to the Front Yard, or go inside to the Kitchen.");
+                        Console.ReadKey();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        if (HasShovel == false)
+                        {
+                            Console.WriteLine("You approach the flowerbeds. There's evidence of the flowerbeds being tampered with, but digging through all these\n" +
+                                "by hand is hardly feasible. Maybe there's something somewhere around the house that will help you dig easier.");
+                            Console.ReadLine();
+                        }
+                        else if (HasShovel == true)
+                        {
+                            Console.WriteLine("You approach the flowerbeds. There's evidence of the flowerbeds being tampered with. With the shovel you found,\n" +
+                                "you dig through the flowerbeds, and in one of them, you find a human skeleton! You nearly run on instinct, but notice the\n" +
+                                "skeleton has ring on one of its fingers. Not one to let anything go to waste, you decide to relieve the skeleton of its ring.\n" +
+                                "It's for the enviorment, certainly not because you hope it's worth something, you tell yourself.");
+                            HasRing = true;
+                            HasShovel = false;
+                            UsedShovel = true;
+                            Console.ReadKey();
+                        }
+                        else if (UsedShovel == true && HasShovel == false)
+                        {
+                            Console.WriteLine("You already inspected the flowerbeds and found a ring.");
+                            Console.ReadKey();
+                        }
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine("You inspect the old fountain. It has long since dried up, and is filled only with leaves now. Unfortunately, even\n" +
+                            "after digging through them, you find nothing of use.");
+                        Console.ReadKey();
+                        break;
+                    case 4:
+                        Console.Clear();
+                        Console.WriteLine("You dive headfirst into the bushes, but obtain nothing but cuts and scratches. Luckily, your HP remains unchanged.");
+                        Console.ReadKey();
+                        break;
+                    case 5:
+                        keepLooping = false;
+                        FrontYard();
+                        break;
+                    case 6:
+                        keepLooping = false;
+                        Kitchen();
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
         static void LivingRoom()
         {
+            bool keepLooping = true;
+            while (keepLooping)
+            {
+                Console.Clear();
+                Console.WriteLine("You arrive at the Living Room.");
+                Console.WriteLine("What will you do?\n" +
+                    "1. Inspect Room\n" +
+                    "2. Inspect Furniture\n" +
+                    "3. Inspect Walls\n" +
+                    "4. Go to Foyer\n" +
+                    "5. Go to Basement");
+                int input = int.Parse(Console.ReadLine());
+                switch (input)
+                {
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("");
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("");
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine();
+                        break;
+                    case 4:
+                        keepLooping=false;
+                        Foyer();
+                        break;
+                    case 5:
+                        keepLooping = false;
+                        Basement();
+                        break;
+                }
 
+            }
         }
         static void FrontYard()
         {
 
         }
         static void WineCellar()
+        {
+
+        }
+
+        static void Basement()
         {
 
         }
