@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using static System.Net.Mime.MediaTypeNames;
 namespace ProgramUI
 {
     public class ProgramUI
@@ -41,6 +41,7 @@ namespace ProgramUI
                 "decison. Alarm bells ring in your mind, and you quickly turn on your heel to flee. Before you can return to the wilderness, however, the\n" +
                 "front door slams in your face, and much to your dismay, the handle will not turn. It would appear you are stuck here... Resolved to find\n" +
                 "a way out, you decide to explore this house. There are two rooms you can access from the main hall.");
+            End();
             Console.ReadKey();
             while (keepLooping)
             {
@@ -528,7 +529,7 @@ namespace ProgramUI
                         "vanishing right before your eyes. The exorcism was a success! The ghost has been purified. Your job finished, you leave the house, another\n" +
                         "job completed.");
                     Console.ReadKey();
-                    // close app here
+                    End();
                 }
             }
             else if (response == "No")
@@ -544,6 +545,11 @@ namespace ProgramUI
                 Console.ReadKey();
                 Foyer();
             }
+        }
+
+        static void End()
+        {
+            System.Console.ReadLine();
         }
     }
 }
