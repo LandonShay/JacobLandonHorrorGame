@@ -15,9 +15,14 @@ namespace ProgramUI
         static bool foyerKey = false;
         static bool rugPulled = false;
         static bool attackedByBat = false;
-        static bool HasRing = false;
+        static bool gardenRing = false;
         static bool HasShovel = false;
         static bool UsedShovel = false;
+        static bool bookPulled = false;
+        static bool basementUnlocked = false;
+        static bool ghostBones = false;
+        static bool ghostSkull = false;
+        static bool lighter = false;
         static Player player = new Player();
 
         public void Run()
@@ -64,22 +69,19 @@ namespace ProgramUI
         static void Foyer()
         {
             bool keepLooping = true;
-            Console.Clear();
-            Console.WriteLine("You enter the Foyer.");
-            Console.WriteLine("You look around the Foyer. Up ahead are two winding staircases leading to the second floor, a set up against each wall.\n" +
-                "On the ceiling is a looming chandelier hanging by a disturbingly feeble-looking chain. Beneath it is a worn rug, which you highly suspect\n" +
-                "is infested with all manners of insects. At the back of the Foyer are two more doors, one leading to the living room, and another to the kitchen.");
-            Console.ReadKey();
             while (keepLooping)
             {
                 Console.Clear();
+                Console.WriteLine("You arrive at the Foyer.");
                 Console.WriteLine("What will you do?\n" +
                     "1. Inspect Room\n" +
                     "2. Go to Living Room\n" +
                     "3. Go to Kitchen\n" +
                     "4. Go to Front Yard\n" +
-                    "5. Inspect chandelier\n" +
-                    "6. Inspect rug\n");
+                    "5. Go to Library\n" +
+                    "6. Go to Bedroom\n" +
+                    "7. Inspect chandelier\n" +
+                    "8. Inspect rug\n");
                 int input = int.Parse(Console.ReadLine());
                 switch (input)
                 {
@@ -88,8 +90,9 @@ namespace ProgramUI
                         {
                             Console.Clear();
                             Console.WriteLine("You look around the Foyer. Up ahead are two winding staircases leading to the second floor, a set up against each wall.\n" +
-                            "On the ceiling is a looming chandelier hanging by a disturbingly feeble-looking chain. Beneath it is a worn rug, which you highly suspect\n" +
-                            "is infested with all manner of insects. At the back of the Foyer are two more doors, one leading to the living room, and another to the kitchen.");
+                                "The second floor seems to contain two rooms, the Library, and the Bedroom. On the ceiling is a looming chandelier hanging by a disturbingly\n" +
+                                "feeble-looking chain. Beneath it is a worn rug, which you highly suspect is infested with all manner of insects. At the back of the Foyer\n" +
+                                "are two more doors, one leading to the living room, and another to the kitchen.");
                             Console.ReadKey();
                         }
                         else
@@ -114,6 +117,14 @@ namespace ProgramUI
                         FrontYard();
                         break;
                     case 5:
+                        keepLooping = false;
+                        Library();
+                        break;
+                    case 6:
+                        keepLooping = false;
+                        Bedroom();
+                        break;
+                    case 7:
                         Console.Clear();
                         if (chainBroken == false)
                         {
@@ -160,7 +171,7 @@ namespace ProgramUI
                             Console.ReadKey();
                         }
                         break;
-                    case 6:
+                    case 8:
                         Console.Clear();
                         if (rugPulled == false)
                         {
@@ -316,7 +327,7 @@ namespace ProgramUI
                                 "you dig through the flowerbeds, and in one of them, you find a human skeleton! You nearly run on instinct, but notice the\n" +
                                 "skeleton has ring on one of its fingers. Not one to let anything go to waste, you decide to relieve the skeleton of its ring.\n" +
                                 "It's for the enviorment, certainly not because you hope it's worth something, you tell yourself.");
-                            HasRing = true;
+                            gardenRing = true;
                             HasShovel = false;
                             UsedShovel = true;
                             Console.ReadKey();
@@ -369,33 +380,107 @@ namespace ProgramUI
                 {
                     case 1:
                         Console.Clear();
-                        Console.WriteLine("");
+                        Console.WriteLine("You look around the Living Room. There is plenty of derelict furniture spread about, including a couch,\n" +
+                            "bookshelf, and mini table. From here, you can access the Foyer, and the Basement. You feel the strange sense that you\n " +
+                            "are not in this room alone. From one of the many cracks in the wooden walls, you can feel a gaze upon you.");
+                        Console.ReadKey();
                         break;
                     case 2:
                         Console.Clear();
-                        Console.WriteLine("");
+                        if (bookPulled == false)
+                        {
+                            Console.WriteLine("You inspect the furniture in the room in hopes of finding something useful. You search under the cushions\n" +
+                                "of the couch, on each shelf of the bookshelf, and in each drawer of the mini table. Unfortunately, you find nothing. However,\n" +
+                                "you notice one of the books on the bookshelf seems suspiciously larger than the others. TOO suspicious. Pulling it seems the\n" +
+                                "obvious choice, but it could be a trap. Will you risk it and pull the book? Enter Yes or No.");
+                            string response = Console.ReadLine();
+                            if (response == "Yes")
+                            {
+                                Console.Clear();
+                                Console.WriteLine("You pull the book with hesitance, and hear an unnatural *clink*! You brace for the worst, but find that nothing\n" +
+                                    "happens. At least, it would appear so at first glance. Something must have happened somewhere.");
+                                bookPulled = true;
+                                Console.ReadKey();
+                            }
+                            else if (response == "No")
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Trusting your instinct, you decide not to pull the book.");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Invalid input. Please enter Yes or No.");
+                                Console.ReadKey();
+                            }
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("You inspect the furniture again, but find nothing of use. The book on the bookshelf has already been pulled.");
+                            Console.ReadKey();
+                        }
                         break;
                     case 3:
                         Console.Clear();
+                        if (bookPulled == false)
+                        {
+                            Console.WriteLine("You inspect the walls carefully and timidly, worried about the gaze you feel on the other side\n" +
+                                "of the cracks. For a blessing, you find nothing of note.");
+                            Console.ReadKey();
+                        }
+                        else if (bookPulled == true && foyerKey == false)
+                        {
+                            Console.WriteLine("You inspect the walls carefully and timidly, worried about the gaze you feel on the other side\n" +
+                                "of the cracks. As you go along the wall, you spot a strange keyhole that wasn't there before. That's great\n" +
+                                "and all... but where's the key?");
+                            Console.ReadKey();
+                        }
+                        else if (bookPulled == true && foyerKey == true)
+                        {
+                            Console.WriteLine("You inspect the walls carefully and timidly, worried about the gaze you feel on the other side\n" +
+                                "of the cracks. As you go along the wall, you spot a strange keyhole that wasn't there before. You insert the\n" +
+                                "key you found in the foyer, and to your delight, it seems to fit like a glove! It probably unlocked the basement!");
+                            basementUnlocked = true;
+                            Console.ReadKey();
+                        }
+                        else if (basementUnlocked == true)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("You already unlocked the basement.");
+                            Console.ReadKey();
+                        }
                         Console.WriteLine();
                         break;
                     case 4:
-                        keepLooping=false;
+                        keepLooping = false;
                         Foyer();
                         break;
                     case 5:
-                        keepLooping = false;
-                        Basement();
+                        if (basementUnlocked == false)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("You try to enter the basement, but find the door locked. It seems you'll have to search for a key.");
+                            Console.ReadKey();
+                        }
+                        else if (basementUnlocked == false && foyerKey == true)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("You attempt to use the key you found in the foyer to unlock the basement door, but you realize that\n" +
+                                "there's no keyhole! There must be another way to unlock it.");
+                            Console.ReadKey();
+                        }
+                        else if (basementUnlocked == true)
+                        {
+                            keepLooping = false;
+                            Basement();
+                        }
                         break;
                 }
-
             }
         }
         static void FrontYard()
-        {
-
-        }
-        static void WineCellar()
         {
 
         }
@@ -404,6 +489,63 @@ namespace ProgramUI
         {
 
         }
+
+        static void WineCellar()
+        {
+
+        }
+        static void Library()
+        {
+
+        }
+        static void Bedroom()
+        {
+            Console.Clear();
+            Console.WriteLine("You sense that this is the abode of the ghost. You should not enter until you are certain you're ready to face it.\n" +
+                "Do you think you're ready? Enter Yes or No.");
+            string response = Console.ReadLine();
+            if (response == "Yes")
+            {
+                Console.Clear();
+                Console.WriteLine("Feeling confident in your ability to exorcise the ghost, you enter its domain. As soon as you do, the ghost swoops down\n" +
+                    "to strike! You narrowly avoid it and prepare to exorcise it.");
+                Console.ReadKey();
+                if (ghostSkull == false && ghostBones == false && lighter == false)
+                {
+                    Console.WriteLine("Oh no! You attempt to exorcise the ghost, but something's wrong! Your ritual has failed! It seems you did not have all\n" +
+                        "the items necessary to purify its soul. Realizing your plans have failed, you attempt to flee, but the Bedroom door locks before you\n" +
+                        "can escape through it. Now trapped with the ghost, you are left at its mercy. It seems this is the end of the line. The ghost swoops\n" +
+                        "down and...");
+                    Console.ReadKey();
+                    player.Health = 0;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Feeling confident in your ability to exorcise the ghost, you enter its domain. As soon as you do, the ghost swoops down\n" +
+                        "to strike! You narrowly avoid it and prepare to exorcise it.");
+                    Console.WriteLine("You place the skull and bones in the center of the room and light them with the lighter! The ghost writhes in agony before\n" +
+                        "vanishing right before your eyes. The exorcism was a success! The ghost has been purified. Your job finished, you leave the house, another\n" +
+                        "job completed.");
+                    Console.ReadKey();
+                    // close app here
+                }
+            }
+            else if (response == "No")
+            {
+                Console.Clear();
+                Console.WriteLine("You feel that there is yet more to prepare, and return to the Foyer to continue your preparations.");
+                Console.ReadKey();
+                Foyer();
+            }
+            else
+            {
+                Console.WriteLine("Invalid Selection. Please enter Yes or No.");
+                Console.ReadKey();
+                Foyer();
+            }
+        }
     }
 }
+
 
