@@ -8,11 +8,19 @@ namespace ClassLibrary1
 {
     public class Player
     {
+        public Player()
+        {
+
+        }
+        public Player(string name, int health)
+        {
+            name = Name;
+            health = Health;
+        }
+
         public string Name { get; set; }
-        public int Health  { get; set; }
+        public int Health = 5;
+
+
     }
 }
-
- 
-
-
