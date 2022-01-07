@@ -24,7 +24,3 @@ namespace ClassLibrary1
 
     }
 }
-
- 
-
-

@@ -1,4 +1,5 @@
 ﻿using ClassLibrary1;
+using ClassLibrary1.ClassLibrary1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,53 +24,96 @@ namespace ProgramUI
         static bool ghostBones = false;
         static bool ghostSkull = false;
         static bool lighter = false;
+        static bool gameOver = false;
+        static bool keepLooping = true;
         static Player player = new Player();
-
+        public static void GhostAttack()
+        {
+            Random rdnm = new Random();
+            int randomNumber = rdnm.Next(1, 100);
+            if (randomNumber >= 80)
+            {
+                Ghost ghost = new Ghost();
+                player.Health = player.Health - 1;
+                if (player.Health <= 0)
+                {
+                    End();
+                }
+                else
+                {
+                    Console.WriteLine("The ghost swoops down and attacks! You lose 1 HP!");
+                    Console.ReadLine();
+                }
+            }
+        }
+        public static void ChickenAttack()
+        {
+            Random rdnm = new Random();
+            int randomNumber = rdnm.Next(1, 50);
+            if (randomNumber > 49)
+            {
+                Ghost ghost = new Ghost();
+                player.Health = 0;
+                if (player.Health <= 0)
+                {
+                    End();
+                }
+                else
+                {
+                    Console.WriteLine("The ghost of a giant chicken swoops down and attacks! You lose all your HP!");
+                    Console.ReadLine();
+                }
+            }
+        }
         public void Run()
         {
             RunApp();
         }
         public void RunApp()
         {
-            bool keepLooping = true;
-            Console.WriteLine("Name Of Game");
-            Console.WriteLine("Please enter your name.");
-            player.Name = Console.ReadLine();
-            Console.Clear();
-            Console.WriteLine("Before you is a decrepit house, its wooden exterior rotting and grass long dead. The biting wind chills you to the bone,\n" +
-                "and you decide suspect shelter is better than none. You enter the house, its dark and forboding atmosphere making you second guess your\n" +
-                "decison. Alarm bells ring in your mind, and you quickly turn on your heel to flee. Before you can return to the wilderness, however, the\n" +
-                "front door slams in your face, and much to your dismay, the handle will not turn. It would appear you are stuck here... Resolved to find\n" +
-                "a way out, you decide to explore this house. There are two rooms you can access from the main hall.");
-            End();
-            Console.ReadKey();
-            while (keepLooping)
+            if (gameOver == false)
             {
-                Console.WriteLine("Where will you go?\n" +
-                    "1. Foyer\n" +
-                    "2. Garden");
-                int choiceOne = int.Parse(Console.ReadLine());
-                if (choiceOne == 1)
+                Console.WriteLine("The Haunting of Jacob Landon");
+                Console.WriteLine("Please enter your name.");
+                player.Name = Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("You are a ghost hunter that has taken a job to hunt a ghost in an old abandoned house. Be wary of ghost attacks!\n" +
+                    "As you move around the house, the ghost may randomly attack you! You only have 5 HP, you you'd better take care of that ghost quick.\n" +
+                    "Legends also tell of a ghost chicken that will kill you immediately...\n" +
+                    "In order to defeat the ghost, you'll need to preform a ritual. Everything you need is hidden around the house. When you think you're\n" +
+                    "ready, go to the bedroom to challenge the ghost. Now get searching!\n" +
+                    "You arrive at the house and enter the front yard. From here, you can go to two places.");
+                Console.ReadKey();
+                while (keepLooping)
                 {
-                    keepLooping = false;
-                    Foyer();
-                }
-                else if (choiceOne == 2)
-                {
-                    keepLooping = false;
-                    Garden();
-                }
-                else
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Invalid input. Please enter a valid number.");
-                }
+                    keepLooping = true;
+                    Console.WriteLine("Where will you go?\n" +
+                        "1. Foyer\n" +
+                        "2. Garden");
+                    int choiceOne = int.Parse(Console.ReadLine());
+                    if (choiceOne == 1)
+                    {
+                        
+                        Foyer();
+                    }
+                    else if (choiceOne == 2)
+                    {
+                        
+                        Garden();
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Invalid input. Please enter a valid number.");
+                    }
 
+                }
             }
         }
         static void Foyer()
         {
-            bool keepLooping = true;
+            GhostAttack();
+            ChickenAttack();
             while (keepLooping)
             {
                 Console.Clear();
@@ -106,23 +150,22 @@ namespace ProgramUI
                         }
                         break;
                     case 2:
-                        keepLooping = false;
+                        
                         LivingRoom();
                         break;
                     case 3:
-                        keepLooping = false;
+                        
                         Kitchen();
                         break;
                     case 4:
-                        keepLooping = false;
-                        FrontYard();
+                        
                         break;
                     case 5:
-                        keepLooping = false;
+                        
                         Library();
                         break;
                     case 6:
-                        keepLooping = false;
+                        
                         Bedroom();
                         break;
                     case 7:
@@ -196,7 +239,8 @@ namespace ProgramUI
         }
         static void Kitchen()
         {
-            bool keepLooping = true;
+            GhostAttack();
+            ChickenAttack();
             while (keepLooping)
             {
                 Console.Clear();
@@ -274,15 +318,15 @@ namespace ProgramUI
                         }
                         break;
                     case 5:
-                        keepLooping = false;
+                        
                         Foyer();
                         break;
                     case 6:
-                        keepLooping = false;
+                        
                         WineCellar();
                         break;
                     case 7:
-                        keepLooping = false;
+                        
                         Garden();
                         break;
                     default:
@@ -292,7 +336,8 @@ namespace ProgramUI
         }
         static void Garden()
         {
-            bool keepLooping = true;
+            GhostAttack();
+            ChickenAttack();
             while (keepLooping)
             {
                 Console.Clear();
@@ -302,8 +347,7 @@ namespace ProgramUI
                     "2. Inspect Flowerbeds\n" +
                     "3. Inspect Fountain\n" +
                     "4. Inspect Bushes\n" +
-                    "5. Go to Front Yard\n" +
-                    "6. Go to Kitchen");
+                    "5. Go to Kitchen");
                 int input = int.Parse(Console.ReadLine());
                 switch (input)
                 {
@@ -351,11 +395,7 @@ namespace ProgramUI
                         Console.ReadKey();
                         break;
                     case 5:
-                        keepLooping = false;
-                        FrontYard();
-                        break;
-                    case 6:
-                        keepLooping = false;
+                        
                         Kitchen();
                         break;
                     default:
@@ -365,7 +405,8 @@ namespace ProgramUI
         }
         static void LivingRoom()
         {
-            bool keepLooping = true;
+            GhostAttack();
+            ChickenAttack();
             while (keepLooping)
             {
                 Console.Clear();
@@ -455,7 +496,7 @@ namespace ProgramUI
                         Console.WriteLine();
                         break;
                     case 4:
-                        keepLooping = false;
+                        
                         Foyer();
                         break;
                     case 5:
@@ -474,30 +515,287 @@ namespace ProgramUI
                         }
                         else if (basementUnlocked == true)
                         {
-                            keepLooping = false;
+                            
                             Basement();
                         }
                         break;
                 }
             }
         }
-        static void FrontYard()
-        {
-
-        }
-
-        static void Basement()
-        {
-
-        }
-
-        static void WineCellar()
-        {
-
-        }
         static void Library()
         {
+            GhostAttack();
+            ChickenAttack();
+            while (keepLooping)
+            {
+                Console.Clear();
+                Console.WriteLine("You enter the Library.");
+                Console.WriteLine("What will you do?\n" +
+                    "1. Inspect Room\n" +
+                    "2. Inspect Bookcase\n" +
+                    "3. Look on Desk\n" +
+                    "4. Look out Window\n" +
+                    "5. Go to Foyer\n" +
+                    "6. Go to Bedroom");
+                int input = int.Parse(Console.ReadLine());
+                switch (input)
+                {
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("You look around the Library. The scent of cigar and old leather fills the room, the first pleasant room here. There are several bookcases and\n" +
+                            "art lining the walls. The large windows makes this a well lit room. In the center of the room there is a large oak desk and papers scattered around the base of it There are\n" +
+                            "two doors in the room, one leading to the Bedroom, one leading to back to the foyer.");
+                        Console.ReadKey();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("You inspect the bookcase. It appears to have several old books. There are a few that seem to be still in tact. Maybe you can read one later...");
+                        Console.ReadKey();
+                        break;
+                    case 3:
+                        Console.Clear();
+                        if (lighter == true)
+                        {
+                            Console.WriteLine("You search the desk again, but find nothing.");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Console.WriteLine("You search through the drawers one by one, and find a Zippo! Don't go burning the place down now.");
+                            Console.ReadKey();
+                            lighter = true;
+                        }
+                        break;
+                    case 4:
+                        Console.Clear();
+                        {
+                            Console.WriteLine("You wipe off the dirt from the window and look out to your car in the front yard.\n" +
+                                "Maybe theres still time to run out there and just drive off");
+                        }
+                        Console.ReadKey();
+                        break;
+                    case 5:
+                        Foyer();
+                        break;
+                    case 6:
+                        Bedroom();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        static void Crematorium()
+        {
+            GhostAttack();
+            ChickenAttack();
+            while (keepLooping)
+            {
+                Console.Clear();
+                Console.WriteLine("You enter the Crematorium.");
+                Console.WriteLine("What will you do?\n" +
+                    "1. Inspect Room\n" +
+                    "2. Inspect Furnace\n" +
+                    "3. Cry\n" +
+                    "4. Go to Wine Cellar");
+                int input = int.Parse(Console.ReadLine());
+                switch (input)
+                {
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("You look around the Crematorium. The stench of burning corpses still flood the room. There are several furnaces\n" +
+                            "where bodies were burned years ago. Though you are alone you feel surrounded in this room. There is\n" +
+                            "one door in the room, leading back to the Wine cellar.");
+                        Console.ReadKey();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        if (ghostBones == false)
+                        {
+                            Console.WriteLine("You inspect the Furnace. Still charred black you see a set of bones mangled on a tray. You grab the largest bones and take them with you,\n" +
+                                "Ghost Bones added to your inventory.");
+                            ghostBones = true;
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Console.WriteLine("There is nothing left in the furnace but ash.");
+                            Console.ReadKey();
+                        }
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine("Your breath shortens and your chest tightens up, the aroma of this room is too much to handle. \n" +
+                            "After a good cry you feel a little better and gain" +
+                            "one life point!");
+                        player.Health = player.Health + 1;
+                        Console.ReadKey();
+                        break;
+                    case 4:
+                        
+                        WineCellar();
+                        break;
+                    default:
+                        break;
 
+                }
+            }
+        }
+        static void WineCellar()
+        {
+            GhostAttack();
+            ChickenAttack();
+            while (keepLooping)
+            {
+                Console.Clear();
+                Console.WriteLine("You enter the Wine Cellar.");
+                Console.WriteLine("What will you do?\n" +
+                    "1. Inspect Room\n" +
+                    "2. Inspect Wine Rack\n" +
+                    "3. Have a Glass of Pinot\n" +
+                    "4. Look in Trash Chute\n" +
+                    "5. Go to Kitchen\n" +
+                    "6. Go to Basement");
+                int input = int.Parse(Console.ReadLine());
+                switch (input)
+                {
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("You look around the Wine Cellar. There are still hundreds of bottles lining the walls. There are several racks and\n" +
+                            "a trash chute in the corner of the room. Strange to have a trash chute in a subfloor, wonder where it goes? There are\n" +
+                            "two doors in the room, one leading to the Kitchen, one leading to back to the Basement.");
+                        Console.ReadKey();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("You inspect the wine rack. Hundreds of untouched bottles still fill this room. You find a vintage Pinot Noir unopened,\n" +
+                            "wonder if anyone will notice...");
+                        Console.ReadKey();
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine("You grab one of the bottles and notice a small panel behind it, looks like a ring would fit right in there.");
+                        if (gardenRing == false)
+                        {
+                            Console.WriteLine("there must be a ring laying around here somewhere...");
+                        }
+                        else
+                        {
+                            Console.WriteLine("You place the ring you found into the slot and hear rumbling as the wall opens to the next room");
+                            Console.ReadKey();
+                            Crematorium();
+                        }
+                        Console.ReadKey();
+                        break;
+                    case 4:
+                        Console.Clear();
+                        Console.WriteLine("You open the chute that appears to have dried bloodstains streaked across the inside of the door.\n" +
+                            "Whatever was being put in there was in rough shape.");
+                        Console.ReadKey();
+                        break;
+                    case 5:
+                        
+                        Kitchen();
+                        break;
+                    case 6:
+                        
+                        Basement();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        static void Basement()
+        {
+            GhostAttack();
+            ChickenAttack();
+            while (keepLooping)
+            {
+                Console.Clear();
+                Console.WriteLine("You enter the Basement.");
+                Console.WriteLine("What will you do?\n" +
+                    "1. Inspect Room\n" +
+                    "2. Inspect Table\n" +
+                    "3. Look on Shelf\n" +
+                    "4. Look in Cabinets\n" +
+                    "5. Go to Living Room\n" +
+                    "6. Go to Wine Cellar");
+                int input = int.Parse(Console.ReadLine());
+                switch (input)
+                {
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("You look around the Basement. The musty stench from the moldy walls fill your nose. There are several cabinets and\n" +
+                            "tools lining the walls. The small well windows give a little light to the room, for the most part its too dark to see what is around you. There are\n" +
+                            "two doors in the room, one leading to the Wine Cellar, one leading to back to the Living room.");
+                        Console.ReadKey();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("You inspect the table. It appears to be an old butchers table. You find skeletons of pigs and chickens scattered beneath the table,\n" +
+                            "maybe a chicken is haunting these grounds");
+                        Console.ReadKey();
+                        break;
+                    case 3:
+                        Console.Clear();
+                        if (HasShovel == false)
+                        {
+                            Console.WriteLine("You search through the shelves one by one, and find a Shovel! If there was anything hidden in the garden, surely\n" +
+                                "you can now find out.");
+                            Console.ReadKey();
+                            HasShovel = true;
+                        }
+                        else if (HasShovel == true || HasShovel == true)
+                        {
+                            Console.WriteLine("You search the shelves again, but find nothing.");
+                            Console.ReadKey();
+                        }
+                        break;
+                    case 4:
+                        Console.Clear();
+                        if (ghostSkull == false)
+                        {
+                            Console.WriteLine("You open the cabinet hoping to find something useful. You see something tangled up in cobwebs in the back but it\n" +
+                                "is too dark to tell what it is. Do you grab it? Enter Yes or No");
+                            string response = Console.ReadLine();
+                            if (response == "Yes")
+                            {
+                                Console.WriteLine("You reach into the cabnet and pull a decayed skull from the webbing. You hear a voice call out to you saying 'did you loose your mind?'\n" +
+                                    "Added Ghost Skull to your inventory");
+                                ghostSkull = true;
+                                Console.ReadKey();
+                            }
+                            else if (response == "No")
+                            {
+                                Console.WriteLine("Not wanting to get your hands covered in cobwebs, you decide to leave it be");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid input. Please enter Yes or No.");
+                                Console.ReadKey();
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Does not seem to be anything left in the cabinets");
+                            Console.ReadKey();
+                        }
+                        Console.ReadKey();
+                        break;
+                    case 5:
+                        
+                        LivingRoom();
+                        break;
+                    case 6:
+                        
+                        WineCellar();
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
         static void Bedroom()
         {
@@ -529,7 +827,6 @@ namespace ProgramUI
                         "vanishing right before your eyes. The exorcism was a success! The ghost has been purified. Your job finished, you leave the house, another\n" +
                         "job completed.");
                     Console.ReadKey();
-                    End();
                 }
             }
             else if (response == "No")
@@ -546,12 +843,28 @@ namespace ProgramUI
                 Foyer();
             }
         }
-
         static void End()
         {
-            System.Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine("You died!");
+            Console.ReadLine();
+            gameOver = true;
+            keepLooping = false;
+            DeadRoom();
+        }
+        static void DeadRoom()
+        {
+            if (gameOver)
+            {
+                Console.WriteLine("Thanks for playing! Project by Jacob and Landon.");
+                Environment.Exit(0);
+            }
+            else
+            {
+
+            }
+
         }
     }
 }
-
 
